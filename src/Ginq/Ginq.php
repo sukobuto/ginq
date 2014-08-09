@@ -1002,6 +1002,27 @@ class Ginq implements \IteratorAggregate
         return new OrderingGinq($this->getIterator(), $comparer);
     }
 
+	/**
+	 * @param callable|array|string|null $comparator (v0, v1) -> v:integer
+	 * @return OrderingGinq
+	 */
+	public function orderByComparator($comparator = null)
+	{
+		$comparer = ComparerResolver::resolve($comparator, Comparer::getDefault());
+		return new OrderingGinq($this->getIterator(), $comparer);
+	}
+
+	/**
+	 * @param callable|array|string|null $comparator (v0, v1) -> v:integer
+	 * @return OrderingGinq
+	 */
+	public function orderByComparatorDesc($comparator = null)
+	{
+		$comparer = ComparerResolver::resolve($comparator, Comparer::getDefault());
+		$comparer = new ReverseComparer($comparer);
+		return new OrderingGinq($this->getIterator(), $comparer);
+	}
+
     /**
      * @return Ginq
      */
