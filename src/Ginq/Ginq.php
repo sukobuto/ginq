@@ -762,6 +762,8 @@ class Ginq implements \IteratorAggregate
     {
         if ($xs instanceof self) {
             return $xs;
+        } else if ($xs instanceof GroupingGinq or $xs instanceof OrderingGinq) {
+            return new self(IteratorUtil::iterator($xs));
         } else {
             $class = get_called_class();
             if ($class === "Ginq\\GroupingGinq" || $class === "Ginq\\OrderingGinq") {
